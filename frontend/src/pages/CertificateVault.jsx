@@ -490,7 +490,7 @@ export default function CertificateVault({ setActiveTab }) {
               <div style={{ marginBottom: 20 }}>
                 {viewingCert.file_path.toLowerCase().endsWith('.pdf') ? (
                   <a
-                    href={viewingCert.file_path}
+                    href={`http://localhost:8000${viewingCert.file_path}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-secondary"
@@ -503,20 +503,36 @@ export default function CertificateVault({ setActiveTab }) {
                     borderRadius: 'var(--radius-sm)',
                     overflow: 'hidden',
                     border: '1px solid var(--border-subtle)',
-                    maxHeight: 340,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(255,255,255,0.03)'
+                    background: 'rgba(255,255,255,0.03)',
+                    textAlign: 'center'
                   }}>
                     <img
-                      src={viewingCert.file_path}
+                      src={`http://localhost:8000${viewingCert.file_path}`}
                       alt={viewingCert.title}
-                      style={{ maxWidth: '100%', maxHeight: 340, objectFit: 'contain' }}
-                      onError={(e) => { e.target.style.display = 'none'; }}
+                      style={{ maxWidth: '100%', maxHeight: 400, objectFit: 'contain', display: 'block', margin: '0 auto' }}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'block';
+                      }}
                     />
+                    <div style={{ display: 'none', padding: 20, color: 'var(--text-muted)', fontSize: '0.82rem' }}>
+                      Image preview unavailable
+                    </div>
                   </div>
                 )}
+              </div>
+            )}
+            {!viewingCert.file_path && (
+              <div style={{
+                marginBottom: 20,
+                padding: '20px',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px dashed var(--border-subtle)',
+                textAlign: 'center',
+                color: 'var(--text-muted)',
+                fontSize: '0.82rem'
+              }}>
+                No document file attached to this certificate
               </div>
             )}
 
