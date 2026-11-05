@@ -490,7 +490,7 @@ export default function CertificateVault({ setActiveTab }) {
               <div style={{ marginBottom: 20 }}>
                 {viewingCert.file_path.toLowerCase().endsWith('.pdf') ? (
                   <a
-                    href={`http://localhost:8000${viewingCert.file_path}`}
+                    href={`${viewingCert.file_path}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-secondary"
@@ -507,7 +507,7 @@ export default function CertificateVault({ setActiveTab }) {
                     textAlign: 'center'
                   }}>
                     <img
-                      src={`http://localhost:8000${viewingCert.file_path}`}
+                      src={`${viewingCert.file_path}`}
                       alt={viewingCert.title}
                       style={{ maxWidth: '100%', maxHeight: 400, objectFit: 'contain', display: 'block', margin: '0 auto' }}
                       onError={(e) => {

@@ -145,3 +145,18 @@ FastAPI will automatically create all required tables (*users*, *certificates*, 
 5. Visit the **Company & Roles** tab, choose **Microsoft** or **Cloud Support Engineer**, and click **Analyze Qualifications**.
 6. Review the **Gap Analysis** showing demonstrated skills (Azure, Cloud, Networking) vs gaps (Linux, Docker) with recommended certifications and projects.
 7. Click **Create Tailored Resume** to open the **Resume Builder**, review the real-time ATS preview on the right, and click **Download ATS PDF** to receive the ReportLab-generated resume!
+
+
+## Hosting on Render
+
+The root Dockerfile builds React and serves it alongside FastAPI at the same URL.
+Create a Render **Web Service** from this repository, select **Docker**, and set
+`SECRET_KEY` to a randomly generated secret (at least 32 bytes). Select the Free
+compute plan for a temporary demo and use `/api/health` as the health check path.
+No separate frontend URL or API URL configuration is needed.
+
+Free hosting uses temporary storage: accounts, certificates, uploaded files and
+saved resumes are lost on restart, redeploy or idle spin-down. Download important
+files before leaving the demo. Durable hosting requires persistent storage.
+Google sign-in is disabled until server-side identity verification is implemented;
+use Register Now and email/password login. OCR support is installed in the Docker image.

@@ -90,25 +90,7 @@ def login(login_in: UserLogin, db: Session = Depends(get_db)):
 
 @app.post("/api/auth/google", response_model=Token)
 def google_auth(google_in: GoogleLoginRequest, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == google_in.email).first()
-    if not user:
-        # Create user account for Google authenticated student
-        import secrets
-        random_pwd = secrets.token_urlsafe(16)
-        user = User(
-            email=google_in.email,
-            hashed_password=hash_password(random_pwd),
-            full_name=google_in.full_name or "Google Student",
-            college=google_in.college or "Govt College of Technology",
-            degree=google_in.degree or "B.E. Computer Science and Engineering",
-            graduation_year=google_in.graduation_year or "2026"
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-
-    token = create_access_token({"sub": str(user.id), "email": user.email})
-    return {"access_token": token, "token_type": "bearer", "user": user}
+    raise HTTPException(status_code=501, detail="Google sign-in is unavailable. Please use email and password.")
 
 @app.get("/api/auth/me", response_model=UserOut)
 def get_current_user_profile(current_user: User = Depends(get_current_user)):
@@ -586,3 +568,9 @@ def get_dashboard_stats(
             for c in certs[:5]
         ]
     }
+
+
+# Serve the production frontend after API routes so /api keeps its handlers.
+FRONTEND_DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+if (FRONTEND_DIST / "index.html").is_file():
+    app.mount("/", StaticFiles(directory=str(FRONTEND_DIST), html=True), name="frontend")

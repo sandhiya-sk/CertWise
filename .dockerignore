@@ -1,0 +1,12 @@
+.git
+**/node_modules
+**/dist
+**/__pycache__
+**/*.db
+**/*.sqlite3
+**/.env
+**/.env.*
+**/.venv
+**/venv
+backend/uploads
+backend/generated_resumes
